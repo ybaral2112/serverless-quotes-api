@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serverless Quotes API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 40px;
+    }
+    h1 {
+      color: #007acc;
+    }
+    #quote-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      margin: 40px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background: #007acc;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Quote Generator</h1>
+  <div id="quote-box">
+    <p id="quote">Loading quote...</p>
+    <button onclick="getQuote()">New Quote</button>
+  </div>
+
+  <script>
+    const API_URL = "https://your-api-id.execute-api.ap-south-1.amazonaws.com/"; // 🔹 Replace with your real API Gateway URL
+
+    async function getQuote() {
+      document.getElementById("quote").textContent = "Loading...";
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        document.getElementById("quote").textContent = data.quote;
+      } catch (err) {
+        document.getElementById("quote").textContent = "Error fetching quote 😞";
+        console.error(err);
+      }
+    }
+
+    getQuote(); // load one quote on start
+  </script>
+</body>
+</html>
